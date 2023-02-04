@@ -1,0 +1,146 @@
+<html><head>
+    <title>Create HTML5 Canvas JavaScript Paint Bucket Example</title>
+  </head>
+  <body cz-shortcut-listen="true">
+
+	
+    <div id="canvasDiv" style="background:#FFFFFF;">
+	</div>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="excanvas.js"></script>
+<![endif]-->
+
+
+
+    <script type="text/javascript" src="nutzy-paint.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function () {
+    	 	paintBucketApp.init();
+		 $('#save').attr('disabled','disabled');
+		 $('#text_cnv').keyup(function() {
+			if($(this).val() != '') {
+			   $('input#save').removeAttr('disabled');
+			} else {
+				if($(this).val() == '') {
+					$('#save').attr('disabled','disabled');
+				}
+			}
+		 });
+ 
+		});
+</script>
+
+Name: <input type="text" id="text_cnv" size="40" maxlength="250">
+
+<input type="button" id="save" value="Save to PNG" disabled=""> 
+<script type="text/javascript">
+
+
+document.getElementById('save').onclick = function () {
+    // window.location = canvas.toDataURL('image/png');
+	filename = "Nuzty_Colorfill_By_" + $( "input#text_cnv" ).val().replace(/ /g,"-");
+	download(canvas, filename);
+  };
+ 
+function download(canvas, filename) {
+// <![CDATA[
+// Script to add Text in Canvas from input text field, as it is typed
+// From: http://coursesweb.net/
+
+// function to clear the canvas
+// cnv = the object with the canvas element
+function clearCanvas(cnv) {
+  var ctx = cnv.getContext('2d');     // gets reference to canvas context
+  ctx.beginPath();    // clear existing drawing paths
+  ctx.save();         // store the current transformation matrix
+
+  // Use the identity matrix while clearing the canvas
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, cnv.width, cnv.height);
+
+  ctx.restore();        // restore the transform
+}
+
+// adds the text in canvas, oon multiple lines
+// ctx = reference to canvas context
+// text = the text to add
+// x = horizontal position where to start adding the text
+// y = vertical position where to start adding the text
+// maxWidth = the maximum width of the text line
+//  lineHeight = the height of the line
+function  addTextCnv(ctx, text, x, y, maxWidth, lineHeight) {
+  // splits the text in words to can wrap it on new lie if exceds maxWidth
+  var words = text.split(' ');
+  var nr_w = words.length
+  var addtxt = '';
+
+  // sets to add the text and rows
+  for(var n = 0; n < nr_w; n++) {
+    var txtLine = addtxt + words[n] + ' ';
+    var metrics = ctx.measureText(txtLine);
+    var txtWidth = metrics.width;
+    if (txtWidth > maxWidth && n > 0) {
+      ctx.fillText(addtxt, x, y);
+      addtxt = words[n] + ' ';
+      y += lineHeight;
+    }
+    else addtxt = txtLine;
+  }
+
+  // adds the text in canvas (sets text color, font type and size)
+  ctx.fillStyle = '#0001be';
+  ctx.font = 'bold 17px sans-serif';
+  ctx.textAlign="right";
+  ctx.fillText(addtxt, x, y);
+}
+
+// get a reference to the canvas element, and its context
+// var cnv1 = document.getElementById('cnv1');
+var ctx1 = canvas.getContext('2d');
+
+// sets maximum line width, line height, and x /y coords for text
+var maxWidth = canvas.width - 10;
+var lineHeight = 23;
+var x_pos = 450;
+var y_pos = 690;
+
+// register onkeyup event for #text_cnv text field to add the text in canvas as it is typed
+
+  // clearCanvas(canvas);      // clears the canvas
+  // addTextCnv(ctx1, $( "input#text_cnv" ).val(), x_pos, y_pos, maxWidth, lineHeight);
+// ]]>
+
+
+    /// create an "off-screen" anchor tag
+    var lnk = document.createElement('a'),
+        e;
+
+    /// the key here is to set the download attribute of the a tag
+    lnk.download = filename;
+
+    /// convert canvas content to data-uri for link. When download
+    /// attribute is set the content pointed to by link will be
+    /// pushed as "download" in HTML5 capable browsers
+    lnk.href = canvas.toDataURL();
+
+    /// create a "fake" click-event to trigger the download
+    if (document.createEvent) {
+
+        e = document.createEvent("MouseEvents");
+        e.initMouseEvent("click", true, true, window,
+                         0, 0, 0, 0, 0, false, false, false,
+                         false, 0, null);
+
+        lnk.dispatchEvent(e);
+
+    } else if (lnk.fireEvent) {
+
+        lnk.fireEvent("onclick");
+    }
+}
+  
+
+  </script>
+  
+</body></html>

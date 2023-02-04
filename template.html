@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coloring</title>
+	<link href="https://fonts.googleapis.com/css?family=Fredoka+One" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="modal.css">
+   <link rel="stylesheet" href="buttons.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/themes/smoothness/jquery-ui.css" />
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="template-style.css" />
+     <script type="text/javascript" src="coloring.js"></script>
+   
+	<script src="paintbucket.js"></script>
+<script src="picker/src/jquery-hex-colorpicker.js"></script>
+<link rel="stylesheet" href="picker/css/jquery-hex-colorpicker.css" />
+</head>
+<body>
+
+
+
+ 
+ <div class="container-fluid" id="body-container" style="height:100%;">
+
+ <div class="row" style="height:100%;">
+ <div class="col-sm-1 col-md-2 col-lg-2" style="height:100%;margin-top:2%;">
+  <div class="container-fluid" id="nav-container">
+ <nav id="nav" class="nav-primary hidden-xs nav-vertical">
+  <ul class="sidebar">
+	 <li class="navbar-header">
+      <a class="brand" href="#"><img src="images/game-logo.png" id="logo" /></a>
+    </li>
+      <li class="li-flex">
+
+	  <img src="images/home.png" class="li-img" />
+	 <a class="li-box-pts"><span class="pts">Home</span></a> 
+	
+	  </li>
+      <li class="li-flex"><img src="images/parents.png" class="li-img" />
+	  <a class="li-box-pts"><span class="pts">Parents</span></a></li>
+      <li class="li-flex"><img src="images/pts.png" class="li-img" />
+	  <a class="li-box-pts"><span class="pts">28 pts</span></a></li>
+      <li class="li-flex"><img src="images/user.png" class="li-img" />
+	  <mark class="li-box-pts">Hi Maria!</mark></li>
+      <li class="li-flex"><a class="back-btn" id="btn-back">Go Back</a></li>
+   </ul>
+
+</nav>
+ </div>
+ </div>
+ <div class="col-sm-10 col-md-8 col-lg-8" id="game-container">
+ 
+  <div id="game-box">
+  <div id="titles">
+  <div class="float-lg-left" id="left" style="width:50%;">
+  
+  <span class="level-name">Level 2</span><br/>
+  <div class="float-lg-left" id="rd">
+  <span class="read">Readings</span>
+  </div>
+  <div class="float-lg-right" id="lname">
+  <span class="lesson-name">Lesson name</span>
+  </div>
+  </div>
+   <div class="float-lg-right" style="width:50%;" id="title-right">
+  <span class="lesson-title">Title of the topic</span>
+  </div>
+  </div>
+  <img id="game-box-bg" src="images/game-overlay.png" />
+<img id="lesson-title" src="images/game-title.png" />
+   <div id="canvasDiv"></div>
+ </div>
+
+ </div>
+
+
+
+ <div class="col-sm-1 col-md-2 col-lg-2" style="height: 100%;margin-top:5%;">
+   
+  <div id="progress-bar">
+ <div id="progress-title">45%</div>
+ <div class="progress-v vertical">
+  <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar"
+  aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width:100%;height:45%">
+
+  </div>
+    <img id="pro-rocket" src="images/rocket.png" />
+</div>
+ </div>
+ </div>
+</div>
+  </div>
+
+		  <div id="top-bar">
+     <ul class="top-right">
+    <li class="tools" id="finishTool"><a><img src="images/finish.png">Complete</a></li>
+  <li  class="tools" id="undoTool"><a><img src="images/undo.png">Undo</a></li>
+   <li  class="tools" id="deleteTool" onclick="redraw()"><a><img src="images/delete.png">Clear All</a></li>
+    
+	
+  </ul>
+  </div>
+  <div id="tool-bar">
+  <ul id="free-tools">
+  <li class="tools"><button id="crayonTool" class="dselect"></button></li>
+  <li class="tools"><button id="markerTool" class="dselect"></button></li>
+  <li class="tools"><button id="brushTool" class="dselect"></button></li>
+  <li class="tools"><button id="pencilTool" class="slected"></button></li>
+   <li class="tools"><button id="penTool" class="dselect"></button></li>
+  <li class="tools"><button id="eraserTool" class="dselect"></button></li>
+  </ul>
+  
+  
+  
+  </div>
+  <div id="method-bar">
+  <h3 class="headline">COLOR METHOD</h3>
+  <ul id="methods">
+  
+  <li class="tools"><button id="bucketTool" class="dselect" ></button></li>
+  <li class="tools"><button id="freeTool" class="slected"></button></li>
+   <li class="tools" style="display: none;"><button id="handTool" class="dselect"></button></li>
+  </ul>
+   <div id="active-color"><h3 class="headline">ACTIVE COLOR</h3><div id="acolor"></span></div></div>
+  <input id="color-picker" style="display:none;">
+	<span id="selectedCol" style="display:none;">0,106,25</span>
+	
+
+ <!--<input type="button" style="position:absolute;top:72%;left: 30%;width: 20%;" value="OK" id="col-btn" class="submit">-->
+  </div>
+  <div id="pal-bar">
+   <ul id="colors">
+  <li class="tools"><button id="red" style="background: rgb(255,27,27);" class="deselect"></button></li>
+  <li class="tools"><button id="orange" style="background: rgb(255,48,64);" class="deselect"></button></li>
+  <li class="tools"><button id="yellow" style="background: rgb(255,242,49);" class="deselect"></button></li>
+  <li class="tools"><button id="lightgreen" style="background: rgb(169,255,84);" class="deselect"></button></li>
+   <li class="tools"><button id="green" style="background: rgb(0,106,25);" class="selected"></button></li>
+  <li class="tools"><button id="lightblue" style="background: rgb(32,160,255);" class="deselect"></button></li>
+   <li class="tools"><button id="blue" style="background: rgb(20,200,255);" class="deselect"></button></li>
+  <li class="tools"><button id="purple" style="background: rgb(141,27,255);" class="deselect"></button></li>
+  <li class="tools"><button id="pink" style="background: rgb(251,49,255);" class="deselect"></button></li>
+  <li class="tools"><button id="lightbrown" style="background: rgb(255,184,128);" class="deselect"></button></li>
+   <li class="tools"><button id="brown" style="background: rgb(139,69,19);" class="deselect"></button></li>
+  <li class="tools"><button id="black" style="background: rgb(0,0,0);" class="deselect"></button></li>
+  </ul>
+  
+  </div>
+    <div class="hide" id="overlay"></div>
+<div id="modal-window" class="hide">
+    <div id="modal-window-msg">
+	    <h1>Congratulations!</h1>
+         <br/><br/>
+		 <h1>
+	     <a id="save" class="button">SAVE</a>
+	
+	<a id="print" id="modal-window-close" class="button">PRINT</a>
+	<a id="share" id="modal-window-close" class="button">SHARE</a>
+   <a href="index.html" id="modal-window-close" class="button">DONE</a>
+   <a href="coloring.html" id="modal-window-close" class="button">DRAW AGAIN</a></h1>
+	</div>
+	
+	
+</div>
+     <script type="text/javascript">
+    drawingApp.init();
+	$('#color-picker').hexColorPicker();	
+    $('#bucketTool').paintbucket('#mycanvas');	
+
+	</script>
+	</body>
+	</html>
